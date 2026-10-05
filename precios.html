@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Precios · SoundLab Studio</title>
+  <meta name="description" content="Lista de precios de servicios de SoundLab Studio: grabación, mastering, mezcla y más." />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: { primary: '#ff6b35', 'primary-light': '#ffa07a', 'background-dark': '#0a0a0a', 'background-card': '#161616' },
+          fontFamily: { display: ['Bebas Neue'], sans: ['Inter'] }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body data-page="precios" class="bg-background-dark text-gray-200 font-sans">
+  <div id="appHeader"></div>
+
+  <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div class="text-center mb-10">
+      <p class="text-primary uppercase tracking-[0.3em] text-xs mb-2 font-medium">Tarifas</p>
+      <h1 class="text-4xl md:text-5xl font-bold text-white mb-3" style="font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.04em;">Nuestros precios</h1>
+      <p class="text-gray-400 max-w-2xl mx-auto">Precios transparentes por servicio. Consulta por paquetes personalizados y descuentos por bloques de horas.</p>
+    </div>
+
+    <div id="preciosCategoria" class="space-y-12"></div>
+
+    <div class="mt-16 bg-background-card border border-primary/20 rounded-2xl p-8 md:p-12">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+        <div>
+          <p class="text-primary uppercase tracking-[0.3em] text-xs mb-2 font-medium">Paquetes combo</p>
+          <h2 class="text-3xl font-bold text-white mb-4" style="font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.04em;">Combos con descuento</h2>
+          <p class="text-gray-300 mb-6">Si combinas varios servicios en un mismo proyecto, aplicamos descuentos automáticos:</p>
+          <ul class="space-y-3">
+            <li class="flex items-start gap-3">
+              <span class="text-primary mt-1">●</span>
+              <div><span class="text-white font-bold">Grabación + Mezcla:</span> <span class="text-gray-400">10% de descuento sobre el total.</span></div>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary mt-1">●</span>
+              <div><span class="text-white font-bold">Grabación + Mezcla + Mastering:</span> <span class="text-gray-400">20% de descuento sobre el total.</span></div>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary mt-1">●</span>
+              <div><span class="text-white font-bold">Bloque 5+ horas:</span> <span class="text-gray-400">15% de descuento en grabación.</span></div>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary mt-1">●</span>
+              <div><span class="text-white font-bold">Producción Completa (4+ temas):</span> <span class="text-gray-400">consultar paquete personalizado.</span></div>
+            </li>
+          </ul>
+        </div>
+        <aside class="bg-primary text-black rounded-2xl p-8">
+          <h3 class="text-2xl font-bold mb-3" style="font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.04em;">¿Necesitas algo a medida?</h3>
+          <p class="text-black/80 mb-6">Si tu proyecto es muy específico o de gran envergadura, escríbenos y armamos un paquete a tu medida.</p>
+          <a href="contacto.html" class="bg-black text-white font-bold py-3 px-6 rounded-lg inline-flex items-center gap-2 hover:bg-gray-900 transition-colors">
+            Escríbenos
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+          </a>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <div id="appFooter"></div>
+  <script src="main.js"></script>
+  <script>
+    function pageInit() {
+      document.getElementById('preciosCategoria').innerHTML = CATEGORIAS.map(cat => {
+        const items = SERVICIOS.filter(s => s.categoria === cat.key);
+        if (items.length === 0) return '';
+        return `
+          <section>
+            <div class="flex items-center gap-3 mb-6">
+              <h2 class="text-3xl font-bold text-white" style="font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.04em;">${cat.label}</h2>
+              <div class="flex-1 h-px bg-primary/20"></div>
+            </div>
+            <div class="bg-background-card border border-gray-800 rounded-2xl overflow-hidden">
+              <table class="w-full text-sm">
+                <thead class="bg-black/30">
+                  <tr class="text-left text-xs uppercase tracking-wider text-gray-400">
+                    <th class="px-6 py-4">Servicio</th>
+                    <th class="px-6 py-4 hidden md:table-cell">Duración</th>
+                    <th class="px-6 py-4 hidden lg:table-cell">Descripción</th>
+                    <th class="px-6 py-4 text-right">Precio</th>
+                    <th class="px-6 py-4 text-right">Acción</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-800">
+                  ${items.map(s => `
+                    <tr class="hover:bg-primary/5 transition-colors">
+                      <td class="px-6 py-5 font-bold text-white">${s.nombre}</td>
+                      <td class="px-6 py-5 hidden md:table-cell text-gray-400">${s.duracion} min</td>
+                      <td class="px-6 py-5 hidden lg:table-cell text-gray-400">${s.descripcion}</td>
+                      <td class="px-6 py-5 text-right text-primary font-bold text-lg" style="font-family: 'Bebas Neue', sans-serif;">${UI.formatPrice(s.precio)}</td>
+                      <td class="px-6 py-5 text-right">
+                        <a href="reserva.html?servicio=${s.id}" class="btn-primary text-xs px-4 py-2">Reservar</a>
+                      </td>
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
+            </div>
+          </section>
+        `;
+      }).join('');
+    }
+  </script>
+</body>
+</html>

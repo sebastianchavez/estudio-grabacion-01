@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Galería · SoundLab Studio</title>
+  <meta name="description" content="Conoce nuestras instalaciones, cabinas y proyectos realizados en SoundLab Studio." />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: { primary: '#ff6b35', 'primary-light': '#ffa07a', 'background-dark': '#0a0a0a', 'background-card': '#161616' },
+          fontFamily: { display: ['Bebas Neue'], sans: ['Inter'] }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body data-page="galeria" class="bg-background-dark text-gray-200 font-sans">
+  <div id="appHeader"></div>
+
+  <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div class="text-center mb-10">
+      <p class="text-primary uppercase tracking-[0.3em] text-xs mb-2 font-medium">Nuestras instalaciones</p>
+      <h1 class="text-4xl md:text-5xl font-bold text-white mb-3" style="font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.04em;">Galería</h1>
+      <p class="text-gray-400 max-w-2xl mx-auto">Un recorrido por nuestras cabinas, sala de control y algunos momentos de sesiones reales.</p>
+    </div>
+
+    <div id="galeriaGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+  </main>
+
+  <div id="appFooter"></div>
+  <script src="main.js"></script>
+  <script>
+    function pageInit() {
+      const imagenes = [
+        { src: 'https://images.unsplash.com/photo-1487537708572-3c850b5e856e?w=900&q=80&auto=format&fit=crop', alt: 'Sala de control' },
+        { src: 'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=900&q=80&auto=format&fit=crop', alt: 'Cabina vocal' },
+        { src: 'https://images.unsplash.com/photo-1499415479124-43c32433a620?w=900&q=80&auto=format&fit=crop', alt: 'Consola de mezcla' },
+        { src: 'https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?w=900&q=80&auto=format&fit=crop', alt: 'Monitores de estudio' },
+        { src: 'https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=900&q=80&auto=format&fit=crop', alt: 'Micrófono condensador' },
+        { src: 'https://images.unsplash.com/photo-1478737270239-2f02b77fc618?w=900&q=80&auto=format&fit=crop', alt: 'Sesión podcast' },
+        { src: 'https://images.unsplash.com/photo-1516280440614-37939bbacd81?w=900&q=80&auto=format&fit=crop', alt: 'Vocalista grabando' },
+        { src: 'https://images.unsplash.com/photo-1513883049090-d0b7439799bf?w=900&q=80&auto=format&fit=crop', alt: 'Producción musical' },
+        { src: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=900&q=80&auto=format&fit=crop', alt: 'Sesión en vivo' },
+        { src: 'https://images.unsplash.com/photo-1485579149621-3123dd979885?w=900&q=80&auto=format&fit=crop', alt: 'Instrumentos' },
+        { src: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=900&q=80&auto=format&fit=crop', alt: 'Detalle de consola' },
+        { src: 'https://images.unsplash.com/photo-1487215078519-e21cc028cb29?w=900&q=80&auto=format&fit=crop', alt: 'Estudio nocturno' }
+      ];
+
+      document.getElementById('galeriaGrid').innerHTML = imagenes.map((img, i) => `
+        <div class="galeria-item aspect-[4/3] relative group" data-idx="${i}">
+          <img src="${img.src}" alt="${img.alt}" class="w-full h-full object-cover" loading="lazy" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/0 to-black/0 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+            <p class="text-white text-sm font-semibold">${img.alt}</p>
+          </div>
+        </div>
+      `).join('');
+
+      document.querySelectorAll('.galeria-item').forEach(el => {
+        el.addEventListener('click', () => {
+          const idx = parseInt(el.dataset.idx, 10);
+          const lb = document.createElement('div');
+          lb.className = 'lightbox';
+          lb.innerHTML = `
+            <button class="absolute top-6 right-6 text-white text-3xl hover:text-primary transition-colors" data-close>&times;</button>
+            <button class="absolute left-6 top-1/2 -translate-y-1/2 text-white text-4xl hover:text-primary transition-colors" id="lbPrev">‹</button>
+            <img src="${imagenes[idx].src}" alt="${imagenes[idx].alt}" />
+            <button class="absolute right-6 top-1/2 -translate-y-1/2 text-white text-4xl hover:text-primary transition-colors" id="lbNext">›</button>
+          `;
+          document.body.appendChild(lb);
+          let cur = idx;
+          const close = () => lb.remove();
+          lb.addEventListener('click', (e) => { if (e.target === lb || e.target.hasAttribute('data-close')) close(); });
+          lb.querySelector('#lbPrev').addEventListener('click', (e) => { e.stopPropagation(); cur = (cur - 1 + imagenes.length) % imagenes.length; lb.querySelector('img').src = imagenes[cur].src; lb.querySelector('img').alt = imagenes[cur].alt; });
+          lb.querySelector('#lbNext').addEventListener('click', (e) => { e.stopPropagation(); cur = (cur + 1) % imagenes.length; lb.querySelector('img').src = imagenes[cur].src; lb.querySelector('img').alt = imagenes[cur].alt; });
+        });
+      });
+    }
+  </script>
+</body>
+</html>

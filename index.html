@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SoundLab Studio · Estudio de Grabación en Santiago</title>
+  <meta name="description" content="Estudio de grabación profesional en Santiago. Mezcla, mastering, producción musical y podcast." />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#ff6b35',
+            'primary-light': '#ffa07a',
+            'background-dark': '#0a0a0a',
+            'background-card': '#161616'
+          },
+          fontFamily: {
+            display: ['Bebas Neue'],
+            sans: ['Inter']
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body data-page="index" class="bg-background-dark text-gray-200 font-sans">
+  <div id="appHeader"></div>
+
+  <main>
+    <section class="relative min-h-[90vh] flex items-center gradient-overlay overflow-hidden" style="background-image: url('https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=600&q=80&auto=format&fit=crop'); background-size: cover; background-position: center;">
+      <div class="absolute inset-0 z-[1] opacity-30" style="background-image: url('https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=600&q=80&auto=format&fit=crop');"></div>
+      <div class="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div class="max-w-4xl">
+            <div class="flex items-center gap-3 mb-6">
+              <span class="rec-dot"></span>
+              <span class="uppercase tracking-[0.3em] text-xs text-primary font-semibold">Estudio abierto · Sesiones disponibles hoy</span>
+            </div>
+            <h1 class="text-6xl md:text-8xl lg:text-9xl font-bold text-white leading-[0.95] mb-6" style="font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.02em;">
+              <span class="block text-3xl md:text-4xl lg:text-5xl text-primary mb-2 font-normal tracking-widest" style="font-family: 'Inter', sans-serif;">SOUNDLAB</span>
+              <span class="hidden md:inline">ESTUDIO</span><span class="text-primary">·</span>
+              <br class="md:hidden" />
+              <span class="italic">DÓNDE TU</span><br/>
+              <span class="text-primary">SONIDO</span> COBRA VIDA
+            </h1>
+            <p class="text-lg md:text-xl text-gray-200 max-w-2xl mb-10 leading-relaxed">
+              Grabación, mezcla, mastering y producción musical con equipos de primer nivel e ingenieros con experiencia internacional. Cabinas tratadas, monitores calibrados y atención personalizada.
+            </p>
+            <div class="flex flex-wrap gap-4 mb-12">
+              <a href="reserva.html" class="btn-primary text-base">
+                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                Reservar sesión
+              </a>
+              <a href="servicios.html" class="btn-outline text-base">Explorar servicios</a>
+            </div>
+            <div class="flex items-center gap-4">
+              <div class="waveform"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+              <p class="text-xs uppercase tracking-widest text-gray-400">REC en vivo</p>
+            </div>
+          </div>
+        </div>
+      <div class="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 animate-bounce">
+        <svg class="h-8 w-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+      </div>
+    </section>
+
+    <section class="py-20 gradient-radial">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          <div>
+            <p class="text-primary uppercase tracking-[0.3em] text-xs mb-3 font-medium">Sobre nosotros</p>
+            <h2 class="text-4xl md:text-5xl font-bold text-white mb-6" style="font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.04em;">Sonido profesional, experiencia única</h2>
+            <p class="text-gray-300 leading-relaxed mb-6">En <span class="text-primary font-semibold">SoundLab Studio</span> contamos con cabinas tratadas acústicamente, una consola analógica de primer nivel y un equipo de ingenieros, productores y vocal coaches con experiencia internacional.</p>
+            <p class="text-gray-300 leading-relaxed mb-8">Trabajamos con artistas independientes, sellos discográficos y creadores de contenido que buscan calidad de estudio y un proceso colaborativo, transparente y enfocado en el resultado.</p>
+            <div class="grid grid-cols-3 gap-6">
+              <div>
+                <p class="text-3xl md:text-4xl font-bold text-primary" style="font-family: 'Bebas Neue', sans-serif;">10+</p>
+                <p class="text-xs uppercase tracking-wider text-gray-400 mt-1">Años</p>
+              </div>
+              <div>
+                <p class="text-3xl md:text-4xl font-bold text-primary" style="font-family: 'Bebas Neue', sans-serif;">500+</p>
+                <p class="text-xs uppercase tracking-wider text-gray-400 mt-1">Proyectos</p>
+              </div>
+              <div>
+                <p class="text-3xl md:text-4xl font-bold text-primary" style="font-family: 'Bebas Neue', sans-serif;">12</p>
+                <p class="text-xs uppercase tracking-wider text-gray-400 mt-1">Profesionales</p>
+              </div>
+            </div>
+          </div>
+          <div class="relative">
+            <div class="aspect-[4/5] rounded-2xl overflow-hidden shadow-2xl border border-primary/20">
+              <img src="https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?w=600&q=80&auto=format&fit=crop" alt="Sala de control de SoundLab" class="w-full h-full object-cover" />
+            </div>
+            <div class="absolute -bottom-6 -left-6 bg-background-card border border-primary/30 rounded-xl p-6 shadow-2xl max-w-[220px]">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="rec-dot"></span>
+                <p class="text-primary text-xs uppercase tracking-widest font-bold">Calidad Pro</p>
+              </div>
+              <p class="text-white text-3xl font-bold mb-1" style="font-family: 'Bebas Neue', sans-serif;">★ 4.9</p>
+              <p class="text-gray-400 text-xs">Calificación promedio de nuestros clientes</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-20">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <p class="text-primary uppercase tracking-[0.3em] text-xs mb-3 font-medium">Lo que ofrecemos</p>
+          <h2 class="text-4xl md:text-5xl font-bold text-white mb-3" style="font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.04em;">Nuestros servicios</h2>
+          <p class="text-gray-400 max-w-2xl mx-auto">Desde la grabación de una toma vocal hasta la producción completa de tu próximo hit. Elige el servicio que se ajuste a tu proyecto.</p>
+        </div>
+        <div id="serviciosDestacados" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        <div class="text-center mt-10">
+          <a href="servicios.html" class="btn-outline">Ver todos los servicios</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-20 bg-background-card/30">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <p class="text-primary uppercase tracking-[0.3em] text-xs mb-3 font-medium">El equipo</p>
+          <h2 class="text-4xl md:text-5xl font-bold text-white mb-3" style="font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.04em;">Nuestros profesionales</h2>
+          <p class="text-gray-400 max-w-2xl mx-auto">Ingenieros, productores y coaches con años de experiencia en escenarios y estudios alrededor del mundo.</p>
+        </div>
+        <div id="profesionalesDestacados" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+      </div>
+    </section>
+
+    <section class="py-20">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div class="lg:col-span-2 bg-background-card border border-primary/20 rounded-2xl p-8">
+            <p class="text-primary uppercase tracking-[0.3em] text-xs mb-3 font-medium">Testimonios</p>
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-6" style="font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.04em;">Lo que dicen nuestros artistas</h2>
+            <div class="space-y-6">
+              <div class="border-l-2 border-primary pl-4">
+                <p class="text-gray-300 italic mb-3">"Grabamos el EP completo en SoundLab. La mezcla y el mastering quedaron a otro nivel. Los ingenieros súper atentos y el ambiente ideal para crear."</p>
+                <p class="text-primary font-bold text-sm">— Valentina Soto</p>
+                <p class="text-gray-500 text-xs">Artista independiente</p>
+              </div>
+              <div class="border-l-2 border-primary pl-4">
+                <p class="text-gray-300 italic mb-3">"Llevo tres podcasts grabando aquí. La calidad del audio es consistente y el trato profesional. Recomendado al 100%."</p>
+                <p class="text-primary font-bold text-sm">— Andrés Pérez</p>
+                <p class="text-gray-500 text-xs">Conductor de podcast</p>
+              </div>
+              <div class="border-l-2 border-primary pl-4">
+                <p class="text-gray-300 italic mb-3">"Tomé el curso de producción musical y aprendí muchísimo. Marco es un crack explicando. Volveré para el siguiente nivel."</p>
+                <p class="text-primary font-bold text-sm">— Camila Riquelme</p>
+                <p class="text-gray-500 text-xs">Productora emergente</p>
+              </div>
+            </div>
+          </div>
+          <aside class="bg-primary text-black rounded-2xl p-8 flex flex-col justify-between">
+            <div>
+              <p class="uppercase tracking-[0.3em] text-xs mb-3 font-bold opacity-80">Reserva ahora</p>
+              <h3 class="text-3xl font-bold mb-4" style="font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.04em;">Agenda tu próxima sesión</h3>
+              <p class="text-black/80 mb-6">Asegura tu cabina para el día y horario que prefieras. Confirmación inmediata y pago 100% seguro.</p>
+            </div>
+            <a href="reserva.html" class="bg-black text-white font-bold py-3 px-6 rounded-lg inline-flex items-center justify-center gap-2 hover:bg-gray-900 transition-colors">
+              Reservar ahora
+              <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+            </a>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="appFooter"></div>
+  <script src="main.js"></script>
+  <script>
+    function pageInit() {
+      const destacados = SERVICIOS.slice(0, 6);
+      document.getElementById('serviciosDestacados').innerHTML = destacados.map(s => `
+        <a href="servicios.html" class="service-card card-hover bg-background-card border border-gray-800 rounded-2xl overflow-hidden flex flex-col">
+          <div class="aspect-[4/3] overflow-hidden bg-gray-900">
+            <img src="${s.imagen}" alt="${s.nombre}" class="w-full h-full object-cover" />
+          </div>
+          <div class="p-5 flex-1 flex flex-col">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="text-[10px] uppercase tracking-widest text-primary font-bold">${UI.categoriaLabel(s.categoria)}</span>
+              <span class="text-xs text-gray-500">· ${s.duracion} min</span>
+            </div>
+            <h3 class="text-lg font-bold text-white mb-2" style="font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.04em;">${s.nombre}</h3>
+            <p class="text-sm text-gray-400 mb-4 flex-1">${s.descripcion}</p>
+            <div class="flex items-center justify-between">
+              <p class="text-primary font-bold text-xl" style="font-family: 'Bebas Neue', sans-serif;">${UI.formatPrice(s.precio)}</p>
+              <span class="text-primary text-sm font-semibold">Ver más →</span>
+            </div>
+          </div>
+        </a>
+      `).join('');
+
+      document.getElementById('profesionalesDestacados').innerHTML = PROFESIONALES.map(p => `
+        <div class="card-hover bg-background-card border border-gray-800 rounded-2xl p-6 text-center">
+          <div class="aspect-square w-28 h-28 mx-auto rounded-full overflow-hidden border-2 border-primary/40 mb-4">
+            <img src="${p.foto}" alt="${p.nombre}" class="w-full h-full object-cover" />
+          </div>
+          <h3 class="text-lg font-bold text-white mb-1" style="font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.04em;">${p.nombre}</h3>
+          <p class="text-primary text-xs uppercase tracking-wider font-bold mb-3">${p.rol}</p>
+          <div class="flex items-center justify-center gap-1 text-sm">
+            <span class="text-primary">★</span>
+            <span class="text-white font-bold">${p.rating}</span>
+            <span class="text-gray-500">/ 5.0</span>
+          </div>
+        </div>
+      `).join('');
+    }
+  </script>
+</body>
+</html>

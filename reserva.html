@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reservar sesión · SoundLab Studio</title>
+  <meta name="description" content="Agenda tu sesión en SoundLab Studio. Elige servicio, ingeniero, fecha y hora en simples pasos." />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: { primary: '#ff6b35', 'primary-light': '#ffa07a', 'background-dark': '#0a0a0a', 'background-card': '#161616' },
+          fontFamily: { display: ['Bebas Neue'], sans: ['Inter'] }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body data-page="reserva" class="bg-background-dark text-gray-200 font-sans">
+  <div id="appHeader"></div>
+
+  <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div class="text-center mb-10">
+      <div class="flex items-center justify-center gap-2 mb-2">
+        <span class="rec-dot"></span>
+        <p class="text-primary uppercase tracking-[0.3em] text-xs font-medium">Agenda tu sesión</p>
+      </div>
+      <h1 class="text-4xl md:text-5xl font-bold text-white mb-3" style="font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.04em;">Reservar sesión</h1>
+      <p class="text-gray-400">Sigue los 4 pasos para completar tu reserva</p>
+    </div>
+
+    <div class="max-w-4xl mx-auto mb-10">
+      <div class="flex items-center justify-between">
+        <div class="flex flex-col items-center gap-1 flex-1">
+          <div id="dot1" class="step-dot w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold bg-primary/10 text-primary border-2 border-primary">1</div>
+          <span class="text-xs text-primary font-semibold">Servicio</span>
+        </div>
+        <div id="line1" class="step-line flex-1 mx-2"></div>
+        <div class="flex flex-col items-center gap-1 flex-1">
+          <div id="dot2" class="step-dot w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold bg-gray-800 text-gray-500 border-2 border-gray-700">2</div>
+          <span class="text-xs text-gray-500">Profesional</span>
+        </div>
+        <div id="line2" class="step-line flex-1 mx-2"></div>
+        <div class="flex flex-col items-center gap-1 flex-1">
+          <div id="dot3" class="step-dot w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold bg-gray-800 text-gray-500 border-2 border-gray-700">3</div>
+          <span class="text-xs text-gray-500">Fecha y hora</span>
+        </div>
+        <div id="line3" class="step-line flex-1 mx-2"></div>
+        <div class="flex flex-col items-center gap-1 flex-1">
+          <div id="dot4" class="step-dot w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold bg-gray-800 text-gray-500 border-2 border-gray-700">4</div>
+          <span class="text-xs text-gray-500">Confirmar</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div class="lg:col-span-2">
+        <div id="stepPanel" class="bg-background-card border border-gray-800 rounded-2xl p-6 md:p-8"></div>
+      </div>
+      <aside class="lg:col-span-1">
+        <div class="bg-background-card border border-primary/20 rounded-2xl p-6 sticky top-28">
+          <div class="flex items-center gap-2 mb-4">
+            <svg class="h-5 w-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+            <h3 class="text-lg font-bold text-white" style="font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.04em;">Resumen</h3>
+          </div>
+          <div class="space-y-3 text-sm" id="resumenBox">
+            <div class="flex justify-between"><span class="text-gray-400">Servicio:</span><span id="r-servicio" class="text-white font-medium">—</span></div>
+            <div class="flex justify-between"><span class="text-gray-400">Profesional:</span><span id="r-prof" class="text-white font-medium">—</span></div>
+            <div class="flex justify-between"><span class="text-gray-400">Fecha:</span><span id="r-fecha" class="text-white font-medium">—</span></div>
+            <div class="flex justify-between"><span class="text-gray-400">Hora:</span><span id="r-hora" class="text-white font-medium">—</span></div>
+            <div class="border-t border-gray-700 pt-3 mt-3 flex justify-between text-base">
+              <span class="text-white font-semibold">Total:</span>
+              <span id="r-precio" class="text-primary text-xl font-bold" style="font-family: 'Bebas Neue', sans-serif;">$0</span>
+            </div>
+          </div>
+          <div id="customMsg" class="hidden mt-4 text-xs text-gray-400 italic"></div>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <div id="appFooter"></div>
+  <script src="main.js"></script>
+  <script>
+    function pageInit() {
+      if (!UI.requireAuth('reserva.html')) return;
+
+      const params = new URLSearchParams(window.location.search);
+      const draft = Reservas.getDraft() || {};
+      const state = {
+        step: 1,
+        servicioId: draft.servicioId || params.get('servicio') || null,
+        profesionalId: draft.profesionalId || null,
+        fecha: draft.fecha || null,
+        hora: draft.hora || null,
+        notas: draft.notas || ''
+      };
+
+      function save() { Reservas.setDraft(state); }
+      function precioCalc() { return state.servicioId ? UI.servicioById(state.servicioId).precio : 0; }
+
+      function updateResumen() {
+        document.getElementById('r-servicio').textContent = state.servicioId ? UI.servicioById(state.servicioId).nombre : '—';
+        document.getElementById('r-prof').textContent = state.profesionalId ? UI.profesionalById(state.profesionalId).nombre : '—';
+        document.getElementById('r-fecha').textContent = state.fecha ? UI.formatDate(state.fecha) : '—';
+        document.getElementById('r-hora').textContent = state.hora || '—';
+        document.getElementById('r-precio').textContent = UI.formatPrice(precioCalc());
+        const msg = document.getElementById('customMsg');
+        if (state.notas && state.notas.trim()) {
+          msg.classList.remove('hidden');
+          msg.textContent = 'Notas: ' + state.notas;
+        } else msg.classList.add('hidden');
+      }
+
+      function updateDots() {
+        [1,2,3,4].forEach(i => {
+          const dot = document.getElementById('dot'+i);
+          dot.classList.remove('active', 'completed');
+          if (i < state.step) dot.classList.add('completed');
+          else if (i === state.step) dot.classList.add('active');
+          const label = dot.nextElementSibling;
+          if (label) label.classList.toggle('text-primary', i <= state.step);
+          if (label) label.classList.toggle('text-gray-500', i > state.step);
+        });
+        ['line1','line2','line3'].forEach((id, idx) => {
+          const line = document.getElementById(id);
+          line.classList.toggle('active', idx + 1 < state.step);
+        });
+      }
+
+      function renderStep() {
+        updateDots();
+        updateResumen();
+        const panel = document.getElementById('stepPanel');
+        if (state.step === 1) renderStep1(panel);
+        else if (state.step === 2) renderStep2(panel);
+        else if (state.step === 3) renderStep3(panel);
+        else if (state.step === 4) renderStep4(panel);
+      }
+
+      function renderStep1(panel) {
+        const grouped = CATEGORIAS.map(c => ({
+          cat: c,
+          items: SERVICIOS.filter(s => s.categoria === c.key)
+        })).filter(g => g.items.length > 0);
+
+        panel.innerHTML = `
+          <h2 class="text-2xl font-bold text-white mb-2" style="font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.04em;">1. Elige tu servicio</h2>
+          <p class="text-gray-400 text-sm mb-6">Selecciona el tipo de sesión que necesitas.</p>
+          <div class="space-y-8">
+            ${grouped.map(g => `
+              <div>
+                <h3 class="text-xs uppercase tracking-widest text-primary font-bold mb-3">${g.cat.label}</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  ${g.items.map(s => `
+                    <button class="service-card card-hover text-left bg-background-dark border-2 ${state.servicioId === s.id ? 'border-primary' : 'border-gray-800'} rounded-xl p-4 flex gap-4" data-srv="${s.id}">
+                      <img src="${s.imagen}" alt="" class="w-16 h-16 rounded-lg object-cover flex-shrink-0" />
+                      <div class="flex-1">
+                        <p class="text-white font-bold mb-1">${s.nombre}</p>
+                        <p class="text-xs text-gray-400 mb-2">${s.duracion} min · ${s.descripcion.slice(0,60)}...</p>
+                        <p class="text-primary font-bold" style="font-family: 'Bebas Neue', sans-serif;">${UI.formatPrice(s.precio)}</p>
+                      </div>
+                    </button>
+                  `).join('')}
+                </div>
+              </div>
+            `).join('')}
+          </div>
+          <div class="flex justify-end mt-8 pt-6 border-t border-gray-800">
+            <button id="next1" class="btn-primary" ${state.servicioId ? '' : 'disabled'}>
+              Continuar
+              <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+            </button>
+          </div>
+        `;
+        panel.querySelectorAll('[data-srv]').forEach(b => {
+          b.addEventListener('click', () => {
+            state.servicioId = b.dataset.srv;
+            save();
+            renderStep();
+          });
+        });
+        panel.querySelector('#next1').addEventListener('click', () => { state.step = 2; renderStep(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+      }
+
+      function renderStep2(panel) {
+        const srv = UI.servicioById(state.servicioId);
+        const disponibles = PROFESIONALES.filter(p => p.especialidades.includes(state.servicioId));
+        const fallback = disponibles.length ? disponibles : PROFESIONALES;
+
+        panel.innerHTML = `
+          <h2 class="text-2xl font-bold text-white mb-2" style="font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.04em;">2. Elige tu profesional</h2>
+          <p class="text-gray-400 text-sm mb-6">Nuestros ingenieros y coaches especializados en <span class="text-primary font-bold">${srv.nombre}</span>.</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            ${fallback.map(p => `
+              <button class="profesional-card card-hover text-left bg-background-dark border-2 ${state.profesionalId === p.id ? 'border-primary' : 'border-gray-800'} rounded-xl p-4 flex items-center gap-4" data-prof="${p.id}">
+                <img src="${p.foto}" alt="${p.nombre}" class="w-16 h-16 rounded-full object-cover border-2 border-primary/40" />
+                <div class="flex-1">
+                  <p class="text-white font-bold">${p.nombre}</p>
+                  <p class="text-xs text-primary uppercase tracking-wider font-bold">${p.rol}</p>
+                  <div class="flex items-center gap-1 mt-1 text-xs">
+                    <span class="text-primary">★</span>
+                    <span class="text-white font-bold">${p.rating}</span>
+                  </div>
+                </div>
+              </button>
+            `).join('')}
+          </div>
+          <div class="flex justify-between mt-8 pt-6 border-t border-gray-800">
+            <button id="back2" class="btn-outline">Atrás</button>
+            <button id="next2" class="btn-primary" ${state.profesionalId ? '' : 'disabled'}>
+              Continuar
+              <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+            </button>
+          </div>
+        `;
+        panel.querySelectorAll('[data-prof]').forEach(b => {
+          b.addEventListener('click', () => {
+            state.profesionalId = b.dataset.prof;
+            save();
+            renderStep();
+          });
+        });
+        panel.querySelector('#back2').addEventListener('click', () => { state.step = 1; renderStep(); });
+        panel.querySelector('#next2').addEventListener('click', () => { state.step = 3; renderStep(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+      }
+
+      function renderStep3(panel) {
+        const today = new Date().toISOString().split('T')[0];
+        const slots = state.fecha ? UI.generateSlots(state.servicioId, state.fecha) : [];
+
+        panel.innerHTML = `
+          <h2 class="text-2xl font-bold text-white mb-2" style="font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.04em;">3. Fecha y hora</h2>
+          <p class="text-gray-400 text-sm mb-6">Selecciona un día disponible en nuestro calendario.</p>
+          <div class="mb-6">
+            <label class="block text-xs uppercase tracking-wider text-gray-400 mb-2">Fecha</label>
+            <input type="date" id="fechaInput" min="${today}" value="${state.fecha || ''}" class="w-full bg-background-dark border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none" />
+          </div>
+          ${state.fecha ? `
+            <div>
+              <label class="block text-xs uppercase tracking-wider text-gray-400 mb-3">Horarios (slots de 60 minutos)</label>
+              ${slots.length === 0 ? '<p class="text-red-400 text-sm bg-red-500/10 border border-red-500/30 rounded-lg p-4">El estudio está cerrado este día. Por favor elige otra fecha.</p>' : `
+                <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2">
+                  ${slots.map(h => `<button class="time-slot border-2 ${state.hora === h ? 'selected border-primary' : 'border-gray-700 text-gray-300'} rounded-lg py-2.5 px-3 text-sm font-semibold" data-hora="${h}">${h}</button>`).join('')}
+                </div>
+              `}
+            </div>
+          ` : ''}
+          <div class="mt-6">
+            <label class="block text-xs uppercase tracking-wider text-gray-400 mb-2">Notas (opcional)</label>
+            <textarea id="notasInput" class="w-full bg-background-dark border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none resize-none" rows="3" placeholder="Detalles del proyecto, referencias, requisitos especiales...">${state.notas || ''}</textarea>
+          </div>
+          <div class="flex justify-between mt-8 pt-6 border-t border-gray-800">
+            <button id="back3" class="btn-outline">Atrás</button>
+            <button id="next3" class="btn-primary" ${(state.fecha && state.hora) ? '' : 'disabled'}>
+              Continuar
+              <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+            </button>
+          </div>
+        `;
+        const fechaInput = panel.querySelector('#fechaInput');
+        fechaInput.addEventListener('change', () => {
+          state.fecha = fechaInput.value;
+          state.hora = null;
+          save();
+          renderStep();
+        });
+        panel.querySelectorAll('[data-hora]').forEach(b => {
+          b.addEventListener('click', () => {
+            state.hora = b.dataset.hora;
+            save();
+            renderStep();
+          });
+        });
+        const notasInput = panel.querySelector('#notasInput');
+        notasInput.addEventListener('input', () => { state.notas = notasInput.value; save(); updateResumen(); });
+        panel.querySelector('#back3').addEventListener('click', () => { state.step = 2; renderStep(); });
+        panel.querySelector('#next3').addEventListener('click', () => { state.step = 4; renderStep(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+      }
+
+      function renderStep4(panel) {
+        const user = Auth.current();
+        const srv = UI.servicioById(state.servicioId);
+        const prof = UI.profesionalById(state.profesionalId);
+
+        panel.innerHTML = `
+          <h2 class="text-2xl font-bold text-white mb-2" style="font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.04em;">4. Confirma tu reserva</h2>
+          <p class="text-gray-400 text-sm mb-6">Revisa los datos y confirma tu sesión.</p>
+          <div class="bg-background-dark border border-gray-800 rounded-xl overflow-hidden">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-0">
+              <div class="p-5 border-b sm:border-b-0 sm:border-r border-gray-800">
+                <p class="text-xs uppercase tracking-widest text-gray-500 mb-1">Servicio</p>
+                <p class="text-white font-bold">${srv.nombre}</p>
+                <p class="text-xs text-gray-400">${srv.duracion} min</p>
+              </div>
+              <div class="p-5 border-b sm:border-b-0">
+                <p class="text-xs uppercase tracking-widest text-gray-500 mb-1">Profesional</p>
+                <p class="text-white font-bold">${prof.nombre}</p>
+                <p class="text-xs text-primary uppercase tracking-wider font-bold">${prof.rol}</p>
+              </div>
+              <div class="p-5 border-t border-gray-800 sm:border-r">
+                <p class="text-xs uppercase tracking-widest text-gray-500 mb-1">Fecha</p>
+                <p class="text-white font-bold">${UI.formatDate(state.fecha)}</p>
+              </div>
+              <div class="p-5 border-t border-gray-800">
+                <p class="text-xs uppercase tracking-widest text-gray-500 mb-1">Hora</p>
+                <p class="text-white font-bold text-primary text-2xl" style="font-family: 'Bebas Neue', sans-serif;">${state.hora} hrs</p>
+              </div>
+            </div>
+            <div class="p-5 border-t border-gray-800">
+              <p class="text-xs uppercase tracking-widest text-gray-500 mb-1">Cliente</p>
+              <p class="text-white font-bold">${user.nombre}</p>
+              <p class="text-xs text-gray-400">${user.email} · ${user.telefono}</p>
+            </div>
+            ${state.notas ? `
+              <div class="p-5 border-t border-gray-800">
+                <p class="text-xs uppercase tracking-widest text-gray-500 mb-1">Notas</p>
+                <p class="text-white text-sm">${state.notas}</p>
+              </div>
+            ` : ''}
+            <div class="p-5 bg-primary/10 border-t border-primary/30 flex items-center justify-between">
+              <span class="text-white font-bold">Total a pagar</span>
+              <span class="text-primary text-3xl font-bold" style="font-family: 'Bebas Neue', sans-serif;">${UI.formatPrice(precioCalc())}</span>
+            </div>
+          </div>
+          <p class="text-xs text-gray-500 mt-4 italic">Al confirmar, tu reserva quedará en estado "Pendiente" hasta que completes el pago.</p>
+          <div class="flex justify-between mt-8 pt-6 border-t border-gray-800">
+            <button id="back4" class="btn-outline">Atrás</button>
+            <button id="confirmReserva" class="btn-primary">
+              <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+              Confirmar reserva
+            </button>
+          </div>
+        `;
+        panel.querySelector('#back4').addEventListener('click', () => { state.step = 3; renderStep(); });
+        panel.querySelector('#confirmReserva').addEventListener('click', () => {
+          const newRes = Reservas.create({
+            userId: user.id,
+            servicioId: state.servicioId,
+            profesionalId: state.profesionalId,
+            fecha: state.fecha,
+            hora: state.hora,
+            notas: state.notas,
+            precio: precioCalc()
+          });
+          Reservas.setPagoDraft({ reservaId: newRes.id });
+          Reservas.clearDraft();
+          window.location.href = 'confirmacion.html?id=' + newRes.id;
+        });
+      }
+
+      renderStep();
+    }
+  </script>
+</body>
+</html>

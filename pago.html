@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pago · SoundLab Studio</title>
+  <meta name="description" content="Completa el pago de tu reserva en SoundLab Studio." />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: { primary: '#ff6b35', 'primary-light': '#ffa07a', 'background-dark': '#0a0a0a', 'background-card': '#161616' },
+          fontFamily: { display: ['Bebas Neue'], sans: ['Inter'] }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body data-page="pago" class="bg-background-dark text-gray-200 font-sans">
+  <div id="appHeader"></div>
+
+  <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div class="text-center mb-10">
+      <p class="text-primary uppercase tracking-[0.3em] text-xs mb-2 font-medium">Pago seguro</p>
+      <h1 class="text-4xl md:text-5xl font-bold text-white mb-3" style="font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.04em;">Completa tu pago</h1>
+      <p class="text-gray-400">Elige tu método preferido y confirma la transacción.</p>
+    </div>
+
+    <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div class="lg:col-span-2 space-y-6">
+        <section class="bg-background-card border border-gray-800 rounded-2xl p-6">
+          <h2 class="text-xl font-bold text-white mb-4" style="font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.04em;">1. Método de pago</h2>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3" id="metodosPago">
+            <button class="payment-method border-2 border-gray-800 rounded-lg p-4 flex flex-col items-center gap-2" data-metodo="tarjeta">
+              <svg class="h-8 w-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+              <span class="text-sm font-bold text-white">Tarjeta</span>
+            </button>
+            <button class="payment-method border-2 border-gray-800 rounded-lg p-4 flex flex-col items-center gap-2" data-metodo="transferencia">
+              <svg class="h-8 w-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4z"></path></svg>
+              <span class="text-sm font-bold text-white">Transferencia</span>
+            </button>
+            <button class="payment-method border-2 border-gray-800 rounded-lg p-4 flex flex-col items-center gap-2" data-metodo="webpay">
+              <svg class="h-8 w-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"></path></svg>
+              <span class="text-sm font-bold text-white">Webpay</span>
+            </button>
+            <button class="payment-method border-2 border-gray-800 rounded-lg p-4 flex flex-col items-center gap-2" data-metodo="mercadopago">
+              <svg class="h-8 w-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+              <span class="text-sm font-bold text-white">MercadoPago</span>
+            </button>
+          </div>
+        </section>
+
+        <section id="datosPagoSection" class="bg-background-card border border-gray-800 rounded-2xl p-6">
+          <h2 class="text-xl font-bold text-white mb-4" style="font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.04em;">2. Datos de pago</h2>
+          <div id="datosPagoContent">
+            <p class="text-gray-400 text-sm">Selecciona un método de pago para continuar.</p>
+          </div>
+        </section>
+      </div>
+
+      <aside class="lg:col-span-1">
+        <div class="bg-background-card border border-primary/20 rounded-2xl p-6 sticky top-28">
+          <h3 class="text-lg font-bold text-white mb-4" style="font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.04em;">Resumen</h3>
+          <div id="resumenPago" class="space-y-3 text-sm mb-6"></div>
+          <div class="border-t border-gray-700 pt-4 mb-4">
+            <div class="flex justify-between items-center">
+              <span class="text-white font-semibold">Total</span>
+              <span id="pagoTotal" class="text-primary text-3xl font-bold" style="font-family: 'Bebas Neue', sans-serif;">$0</span>
+            </div>
+          </div>
+          <button id="btnConfirmarPago" class="btn-primary w-full" disabled>
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+            Confirmar pago
+          </button>
+          <p class="text-xs text-gray-500 text-center mt-3">Pago 100% seguro · Encriptación SSL</p>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <div id="appFooter"></div>
+  <script src="main.js"></script>
+  <script>
+    function pageInit() {
+      if (!UI.requireAuth('pago.html')) return;
+
+      const id = UI.getQuery('reserva') || (Reservas.getPagoDraft() && Reservas.getPagoDraft().reservaId);
+      const r = id ? Reservas.get(id) : null;
+      if (!r) {
+        window.location.href = 'index.html';
+        return;
+      }
+
+      const srv = UI.servicioById(r.servicioId);
+      const prof = UI.profesionalById(r.profesionalId);
+      let metodo = null;
+
+      document.getElementById('resumenPago').innerHTML = `
+        <div class="flex justify-between"><span class="text-gray-400">Servicio:</span><span class="text-white font-bold text-right">${srv.nombre}</span></div>
+        <div class="flex justify-between"><span class="text-gray-400">Profesional:</span><span class="text-white font-bold">${prof.nombre}</span></div>
+        <div class="flex justify-between"><span class="text-gray-400">Fecha:</span><span class="text-white font-bold text-right">${UI.formatDate(r.fecha)}</span></div>
+        <div class="flex justify-between"><span class="text-gray-400">Hora:</span><span class="text-primary font-bold">${r.hora} hrs</span></div>
+        <div class="flex justify-between"><span class="text-gray-400">Reserva:</span><span class="text-white font-mono text-xs">#${r.id.toUpperCase()}</span></div>
+      `;
+      document.getElementById('pagoTotal').textContent = UI.formatPrice(r.precio);
+
+      function renderDatosPago() {
+        const c = document.getElementById('datosPagoContent');
+        if (!metodo) { c.innerHTML = '<p class="text-gray-400 text-sm">Selecciona un método de pago para continuar.</p>'; return; }
+        const label = {
+          tarjeta: 'Tarjeta de crédito/débito',
+          transferencia: 'Transferencia bancaria',
+          webpay: 'Webpay (Chile)',
+          mercadopago: 'MercadoPago'
+        }[metodo];
+        let form = `<p class="text-primary text-xs uppercase tracking-widest font-bold mb-4">${label}</p>`;
+        if (metodo === 'tarjeta') {
+          form += `
+            <div class="space-y-4">
+              <div>
+                <label class="block text-xs uppercase tracking-wider text-gray-400 mb-2">Nombre del titular</label>
+                <input id="cardName" type="text" class="w-full bg-background-dark border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none" placeholder="Como aparece en la tarjeta" />
+              </div>
+              <div>
+                <label class="block text-xs uppercase tracking-wider text-gray-400 mb-2">Número de tarjeta</label>
+                <input id="cardNumber" type="text" maxlength="19" class="w-full bg-background-dark border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none" placeholder="1234 5678 9012 3456" />
+              </div>
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs uppercase tracking-wider text-gray-400 mb-2">Vencimiento</label>
+                  <input id="cardExp" type="text" maxlength="5" class="w-full bg-background-dark border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none" placeholder="MM/AA" />
+                </div>
+                <div>
+                  <label class="block text-xs uppercase tracking-wider text-gray-400 mb-2">CVV</label>
+                  <input id="cardCvv" type="text" maxlength="4" class="w-full bg-background-dark border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none" placeholder="123" />
+                </div>
+              </div>
+            </div>
+          `;
+        } else if (metodo === 'transferencia') {
+          form += `
+            <div class="space-y-3 text-sm bg-background-dark border border-gray-700 rounded-lg p-5">
+              <p class="text-white font-bold mb-2">Datos para transferencia:</p>
+              <div class="flex justify-between"><span class="text-gray-400">Banco:</span><span class="text-white">Banco Estado</span></div>
+              <div class="flex justify-between"><span class="text-gray-400">Tipo de cuenta:</span><span class="text-white">Corriente</span></div>
+              <div class="flex justify-between"><span class="text-gray-400">N° cuenta:</span><span class="text-white font-mono">123-45678-90</span></div>
+              <div class="flex justify-between"><span class="text-gray-400">RUT:</span><span class="text-white font-mono">76.123.456-7</span></div>
+              <div class="flex justify-between"><span class="text-gray-400">Titular:</span><span class="text-white">SoundLab SpA</span></div>
+              <div class="flex justify-between"><span class="text-gray-400">Email comprobante:</span><span class="text-white">pagos@soundlab.cl</span></div>
+              <p class="text-xs text-gray-500 mt-3 italic">Una vez realizada la transferencia, tu pago será confirmado en un plazo máximo de 24 hrs hábiles.</p>
+            </div>
+          `;
+        } else if (metodo === 'webpay') {
+          form += `
+            <div class="bg-background-dark border border-gray-700 rounded-lg p-5 text-center">
+              <p class="text-gray-300 mb-3">Serás redirigido a Webpay para completar el pago de forma segura.</p>
+              <div class="text-xs text-gray-500">Acepta Visa, Mastercard, Redcompra y más.</div>
+            </div>
+          `;
+        } else if (metodo === 'mercadopago') {
+          form += `
+            <div class="bg-background-dark border border-gray-700 rounded-lg p-5 text-center">
+              <p class="text-gray-300 mb-3">Serás redirigido a MercadoPago para completar el pago.</p>
+              <div class="text-xs text-gray-500">Tarjeta, saldo en cuenta, hasta 12 cuotas.</div>
+            </div>
+          `;
+        }
+        c.innerHTML = form;
+        document.getElementById('btnConfirmarPago').disabled = false;
+      }
+
+      document.querySelectorAll('[data-metodo]').forEach(b => {
+        b.addEventListener('click', () => {
+          document.querySelectorAll('[data-metodo]').forEach(x => x.classList.remove('selected'));
+          b.classList.add('selected');
+          metodo = b.dataset.metodo;
+          renderDatosPago();
+        });
+      });
+
+      document.getElementById('btnConfirmarPago').addEventListener('click', () => {
+        if (!metodo) return;
+        Reservas.update(r.id, { estado: 'confirmada', pago: 'pagado', metodoPago: metodo });
+        Reservas.setPagoDraft({ reservaId: r.id, metodo: metodo, fechaPago: new Date().toISOString() });
+        window.location.href = 'pago-confirmado.html?reserva=' + r.id;
+      });
+    }
+  </script>
+</body>
+</html>

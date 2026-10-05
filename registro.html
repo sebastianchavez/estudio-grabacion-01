@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crear cuenta · SoundLab Studio</title>
+  <meta name="description" content="Regístrate en SoundLab Studio para gestionar tus sesiones." />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: { primary: '#ff6b35', 'primary-light': '#ffa07a', 'background-dark': '#0a0a0a', 'background-card': '#161616' },
+          fontFamily: { display: ['Bebas Neue'], sans: ['Inter'] }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body data-page="registro" class="bg-background-dark text-gray-200 font-sans">
+  <div id="appHeader"></div>
+
+  <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="max-w-md mx-auto">
+      <div class="text-center mb-8">
+        <div class="inline-flex items-center justify-center h-16 w-16 rounded-full bg-primary/10 border border-primary/30 mb-4">
+          <svg class="h-8 w-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path></svg>
+        </div>
+        <h1 class="text-3xl md:text-4xl font-bold text-white mb-2" style="font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.04em;">Crear cuenta</h1>
+        <p class="text-gray-400">Únete y empieza a reservar tus sesiones</p>
+      </div>
+
+      <div class="bg-background-card border border-gray-800 rounded-2xl p-8">
+        <form id="registroForm" class="space-y-5">
+          <div>
+            <label class="block text-xs uppercase tracking-wider text-gray-400 mb-2">Nombre completo</label>
+            <input type="text" required name="nombre" class="w-full bg-background-dark border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none" placeholder="Tu nombre" />
+          </div>
+          <div>
+            <label class="block text-xs uppercase tracking-wider text-gray-400 mb-2">Email</label>
+            <input type="email" required name="email" class="w-full bg-background-dark border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none" placeholder="tu@email.com" />
+          </div>
+          <div>
+            <label class="block text-xs uppercase tracking-wider text-gray-400 mb-2">Teléfono</label>
+            <input type="tel" required name="telefono" class="w-full bg-background-dark border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none" placeholder="+56 9 ..." />
+          </div>
+          <div>
+            <label class="block text-xs uppercase tracking-wider text-gray-400 mb-2">Contraseña</label>
+            <input type="password" required name="password" minlength="6" class="w-full bg-background-dark border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none" placeholder="Mínimo 6 caracteres" />
+          </div>
+          <div>
+            <label class="block text-xs uppercase tracking-wider text-gray-400 mb-2">Confirmar contraseña</label>
+            <input type="password" required name="confirm" minlength="6" class="w-full bg-background-dark border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none" placeholder="Repite tu contraseña" />
+          </div>
+          <label class="flex items-start gap-3 text-sm text-gray-300">
+            <input type="checkbox" required name="tyc" class="mt-1 rounded border-gray-700 bg-background-dark text-primary focus:ring-primary" />
+            <span>Acepto los <a href="terminos.html" class="text-primary hover:text-primary-light font-bold">Términos y Condiciones</a> y la <a href="privacidad.html" class="text-primary hover:text-primary-light font-bold">Política de Privacidad</a>.</span>
+          </label>
+          <button type="submit" class="btn-primary w-full">
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            Crear mi cuenta
+          </button>
+        </form>
+
+        <div class="mt-6 pt-6 border-t border-gray-800 text-center">
+          <p class="text-gray-400 text-sm">¿Ya tienes cuenta? <a href="inicio-sesion.html" class="text-primary hover:text-primary-light font-bold">Iniciar sesión</a></p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div id="appFooter"></div>
+  <script src="main.js"></script>
+  <script>
+    function pageInit() {
+      document.getElementById('registroForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const fd = new FormData(e.target);
+        const pass = fd.get('password');
+        if (pass !== fd.get('confirm')) { UI.toast('Las contraseñas no coinciden.', 'error'); return; }
+        if (!fd.get('tyc')) { UI.toast('Debes aceptar los términos y condiciones.', 'error'); return; }
+        const res = Auth.register({
+          nombre: fd.get('nombre').trim(),
+          email: fd.get('email').trim(),
+          telefono: fd.get('telefono').trim(),
+          password: pass
+        });
+        if (!res.ok) { UI.toast(res.error, 'error'); return; }
+        Auth.login(res.user.email, pass);
+        UI.toast('Cuenta creada. Bienvenido ' + res.user.nombre.split(' ')[0]);
+        setTimeout(() => window.location.href = 'perfil.html', 600);
+      });
+    }
+  </script>
+</body>
+</html>

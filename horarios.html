@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Horarios · SoundLab Studio</title>
+  <meta name="description" content="Horarios de atención y horarios de clases de SoundLab Studio." />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: { primary: '#ff6b35', 'primary-light': '#ffa07a', 'background-dark': '#0a0a0a', 'background-card': '#161616' },
+          fontFamily: { display: ['Bebas Neue'], sans: ['Inter'] }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body data-page="horarios" class="bg-background-dark text-gray-200 font-sans">
+  <div id="appHeader"></div>
+
+  <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div class="text-center mb-10">
+      <p class="text-primary uppercase tracking-[0.3em] text-xs mb-2 font-medium">Disponibilidad</p>
+      <h1 class="text-4xl md:text-5xl font-bold text-white mb-3" style="font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.04em;">Horarios</h1>
+      <p class="text-gray-400 max-w-2xl mx-auto">Consulta nuestros horarios de atención y los horarios de las clases regulares que ofrecemos.</p>
+    </div>
+
+    <section class="mb-12">
+      <div class="flex items-center gap-3 mb-6">
+        <h2 class="text-3xl font-bold text-white" style="font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.04em;">Horario de atención</h2>
+        <div class="flex-1 h-px bg-primary/20"></div>
+      </div>
+      <div class="bg-background-card border border-gray-800 rounded-2xl overflow-hidden">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-0">
+          <div class="p-8 bg-gradient-to-br from-primary/10 to-transparent">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="rec-dot"></span>
+              <p class="text-primary uppercase tracking-widest text-xs font-bold">Abierto ahora</p>
+            </div>
+            <h3 class="text-2xl font-bold text-white mb-2" style="font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.04em;">Reservas 24/7 online</h3>
+            <p class="text-gray-300 text-sm">Puedes reservar tu sesión en cualquier momento del día desde nuestra plataforma. El equipo confirma cada reserva en horario de atención.</p>
+          </div>
+          <div class="p-8 divide-y divide-gray-800">
+            ${[
+              ['Lunes',    HORARIOS.lunes],
+              ['Martes',   HORARIOS.martes],
+              ['Miércoles',HORARIOS.miercoles],
+              ['Jueves',   HORARIOS.jueves],
+              ['Viernes',  HORARIOS.viernes],
+              ['Sábado',   HORARIOS.sabado],
+              ['Domingo',  HORARIOS.domingo]
+            ].map(([dia, h]) => `
+              <div class="flex items-center justify-between py-3 first:pt-0 last:pb-0">
+                <span class="text-white font-semibold">${dia}</span>
+                ${h.abierto
+                  ? `<span class="text-primary font-bold">${h.desde} – ${h.hasta} hrs</span>`
+                  : `<span class="text-red-400 font-bold uppercase tracking-wider text-xs">Cerrado</span>`}
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      </div>
+      <p class="text-gray-500 text-xs mt-4 text-center">* Viernes y sábado abrimos hasta las 02:00 hrs para sesiones nocturnas.</p>
+    </section>
+
+    <section>
+      <div class="flex items-center gap-3 mb-6">
+        <h2 class="text-3xl font-bold text-white" style="font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.04em;">Horario de clases</h2>
+        <div class="flex-1 h-px bg-primary/20"></div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5" id="clasesGrid"></div>
+      <div class="mt-8 bg-background-card border border-primary/20 rounded-2xl p-6 flex items-start gap-4">
+        <svg class="h-10 w-10 text-primary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        <div>
+          <h4 class="text-white font-bold mb-1">Reserva tu clase</h4>
+          <p class="text-gray-400 text-sm">Las clases regulares tienen cupos limitados. Reserva directamente desde la sección de servicios para asegurar tu lugar.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="appFooter"></div>
+  <script src="main.js"></script>
+  <script>
+    function pageInit() {
+      document.getElementById('clasesGrid').innerHTML = CLASES.map(c => `
+        <div class="card-hover bg-background-card border border-gray-800 rounded-2xl p-6">
+          <div class="flex items-start justify-between mb-4">
+            <span class="rec-dot"></span>
+            <span class="text-[10px] uppercase tracking-widest text-primary font-bold bg-primary/10 border border-primary/30 px-2 py-1 rounded">${c.nivel}</span>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-2" style="font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.04em;">${c.nombre}</h3>
+          <p class="text-gray-400 text-sm mb-4">Impartida por <span class="text-primary font-semibold">${c.profesor}</span></p>
+          <div class="flex items-center gap-2 text-white border-t border-gray-800 pt-4">
+            <svg class="h-5 w-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+            <span class="font-semibold">${c.dia}</span>
+            <span class="text-gray-500">·</span>
+            <span class="text-primary font-bold">${c.hora} hrs</span>
+          </div>
+        </div>
+      `).join('');
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Servicios · SoundLab Studio</title>
+  <meta name="description" content="Grabación, mezcla, mastering, producción musical y podcast en SoundLab Studio." />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: { primary: '#ff6b35', 'primary-light': '#ffa07a', 'background-dark': '#0a0a0a', 'background-card': '#161616' },
+          fontFamily: { display: ['Bebas Neue'], sans: ['Inter'] }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body data-page="servicios" class="bg-background-dark text-gray-200 font-sans">
+  <div id="appHeader"></div>
+
+  <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div class="text-center mb-10">
+      <p class="text-primary uppercase tracking-[0.3em] text-xs mb-2 font-medium">Lo que ofrecemos</p>
+      <h1 class="text-4xl md:text-5xl font-bold text-white mb-3" style="font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.04em;">Nuestros servicios</h1>
+      <p class="text-gray-400 max-w-2xl mx-auto">Conoce todas las soluciones que tenemos para tu proyecto. Filtra por categoría para encontrar lo que necesitas.</p>
+    </div>
+
+    <div class="flex flex-wrap items-center justify-center gap-3 mb-10" id="filterChips"></div>
+
+    <div id="serviciosGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+  </main>
+
+  <div id="appFooter"></div>
+  <script src="main.js"></script>
+  <script>
+    function pageInit() {
+      let activeFilter = 'todos';
+
+      function renderChips() {
+        const chips = [{ key: 'todos', label: 'Todos' }, ...CATEGORIAS.map(c => ({ key: c.key, label: c.label }))];
+        document.getElementById('filterChips').innerHTML = chips.map(c => `
+          <button class="chip ${activeFilter === c.key ? 'active' : ''}" data-cat="${c.key}">${c.label}</button>
+        `).join('');
+        document.querySelectorAll('[data-cat]').forEach(btn => {
+          btn.addEventListener('click', () => { activeFilter = btn.dataset.cat; renderChips(); renderGrid(); });
+        });
+      }
+
+      function renderGrid() {
+        const list = activeFilter === 'todos' ? SERVICIOS : SERVICIOS.filter(s => s.categoria === activeFilter);
+        document.getElementById('serviciosGrid').innerHTML = list.map(s => `
+          <div class="service-card card-hover bg-background-card border border-gray-800 rounded-2xl overflow-hidden flex flex-col">
+            <div class="aspect-[4/3] overflow-hidden bg-gray-900">
+              <img src="${s.imagen}" alt="${s.nombre}" class="w-full h-full object-cover" />
+            </div>
+            <div class="p-5 flex-1 flex flex-col">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="text-[10px] uppercase tracking-widest text-primary font-bold">${UI.categoriaLabel(s.categoria)}</span>
+                <span class="text-xs text-gray-500">· ${s.duracion} min</span>
+              </div>
+              <h3 class="text-xl font-bold text-white mb-2" style="font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.04em;">${s.nombre}</h3>
+              <p class="text-sm text-gray-400 mb-5 flex-1">${s.descripcion}</p>
+              <div class="flex items-center justify-between gap-3">
+                <p class="text-primary font-bold text-2xl" style="font-family: 'Bebas Neue', sans-serif;">${UI.formatPrice(s.precio)}</p>
+                <a href="reserva.html?servicio=${s.id}" class="btn-primary text-sm px-5 py-2">Reservar</a>
+              </div>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      renderChips();
+      renderGrid();
+    }
+  </script>
+</body>
+</html>

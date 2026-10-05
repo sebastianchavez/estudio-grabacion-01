@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reserva confirmada · SoundLab Studio</title>
+  <meta name="description" content="Tu reserva ha sido registrada exitosamente." />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: { primary: '#ff6b35', 'primary-light': '#ffa07a', 'background-dark': '#0a0a0a', 'background-card': '#161616' },
+          fontFamily: { display: ['Bebas Neue'], sans: ['Inter'] }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body data-page="confirmacion" class="bg-background-dark text-gray-200 font-sans">
+  <div id="appHeader"></div>
+
+  <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="max-w-2xl mx-auto text-center" id="confirmBox">
+      <div class="checkmark-circle mx-auto mb-6">
+        <div class="background"></div>
+        <div class="checkmark"></div>
+      </div>
+      <p class="text-primary uppercase tracking-[0.3em] text-xs mb-2 font-bold">¡Listo!</p>
+      <h1 class="text-4xl md:text-5xl font-bold text-white mb-4" style="font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.04em;">Reserva confirmada</h1>
+      <p class="text-gray-300 mb-2">Hemos registrado tu sesión. Tu número de reserva es:</p>
+      <p class="text-primary text-2xl font-bold mb-8" id="reservaId" style="font-family: 'Bebas Neue', sans-serif;">—</p>
+
+      <div class="bg-background-card border border-gray-800 rounded-2xl p-6 text-left mb-8" id="detalleBox">
+      </div>
+
+      <div class="bg-primary/10 border border-primary/30 rounded-2xl p-6 mb-8 text-left">
+        <div class="flex items-start gap-3">
+          <svg class="h-6 w-6 text-primary flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          <div>
+            <p class="text-white font-bold mb-1">Siguiente paso: completar el pago</p>
+            <p class="text-gray-300 text-sm">Para asegurar tu cupo en cabina, completa el pago ahora. Si no, tu reserva quedará en estado pendiente.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="#" id="btnPagar" class="btn-primary">
+          <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+          Ir a pagar ahora
+        </a>
+        <a href="index.html" class="btn-outline">Volver al inicio</a>
+      </div>
+    </div>
+  </main>
+
+  <div id="appFooter"></div>
+  <script src="main.js"></script>
+  <script>
+    function pageInit() {
+      const id = UI.getQuery('id');
+      const r = id ? Reservas.get(id) : null;
+      if (!r) {
+        document.getElementById('confirmBox').innerHTML = `
+          <div class="bg-background-card border border-red-500/30 rounded-2xl p-8">
+            <p class="text-red-400 mb-4">No se encontró la reserva.</p>
+            <a href="index.html" class="btn-outline">Volver al inicio</a>
+          </div>
+        `;
+        return;
+      }
+      const srv = UI.servicioById(r.servicioId);
+      const prof = UI.profesionalById(r.profesionalId);
+      const estado = UI.estadoBadge(r.estado);
+      document.getElementById('reservaId').textContent = '#' + r.id.toUpperCase();
+      document.getElementById('detalleBox').innerHTML = `
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+          <div>
+            <p class="text-xs uppercase tracking-widest text-gray-500 mb-1">Servicio</p>
+            <p class="text-white font-bold">${srv.nombre}</p>
+            <p class="text-xs text-gray-400">${srv.duracion} min</p>
+          </div>
+          <div>
+            <p class="text-xs uppercase tracking-widest text-gray-500 mb-1">Profesional</p>
+            <p class="text-white font-bold">${prof.nombre}</p>
+            <p class="text-xs text-primary uppercase tracking-wider font-bold">${prof.rol}</p>
+          </div>
+          <div>
+            <p class="text-xs uppercase tracking-widest text-gray-500 mb-1">Fecha</p>
+            <p class="text-white font-bold">${UI.formatDate(r.fecha)}</p>
+          </div>
+          <div>
+            <p class="text-xs uppercase tracking-widest text-gray-500 mb-1">Hora</p>
+            <p class="text-white font-bold text-primary text-2xl" style="font-family: 'Bebas Neue', sans-serif;">${r.hora} hrs</p>
+          </div>
+        </div>
+        <div class="border-t border-gray-800 pt-4 flex items-center justify-between">
+          <div>
+            <p class="text-xs uppercase tracking-widest text-gray-500 mb-1">Estado</p>
+            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold border ${estado.cls}">${estado.label}</span>
+          </div>
+          <div class="text-right">
+            <p class="text-xs uppercase tracking-widest text-gray-500 mb-1">Total</p>
+            <p class="text-primary text-3xl font-bold" style="font-family: 'Bebas Neue', sans-serif;">${UI.formatPrice(r.precio)}</p>
+          </div>
+        </div>
+      `;
+      document.getElementById('btnPagar').href = 'pago.html?reserva=' + r.id;
+    }
+  </script>
+</body>
+</html>
